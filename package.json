@@ -1,0 +1,22 @@
+{
+    "name": "winstonexample",
+    "version": "1.0.0",
+    "description": "NodeJs Winston Example",
+    "main": "index.js",
+    "scripts": {
+        "test": "npm start",
+        "start": "nodemon server"
+    },
+    "keywords": [
+        "winston",
+        "nodejs",
+        "express"
+    ],
+    "author": "Bhautik Ladva",
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.17.1",
+        "nodemon": "^2.0.7",
+        "winston": "^3.3.3"
+    }
+}
