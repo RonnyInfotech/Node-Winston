@@ -11,5 +11,5 @@ app.use(function(error, req, res, next) {
 app.listen(5000, () => {
     logger.info('Express server is running on localhost:5000')
     logger.error("Something went wrong");
-    // logger.debug("This this Debug Log..");
+    logger.debug("This this Debug Log..");
 });

@@ -1,31 +1,78 @@
 const winston = require('winston');
 var path = require('path');
 
-const logger = winston.createLogger({
+const logger_info = winston.createLogger({
     transports: [
-        new winston.transports.Console(),
+        new winston.transports.Console({
+            format: winston.format.combine(
+                winston.format.colorize({
+                    all: true
+                }))
+        }),
         new winston.transports.File({
             level: 'info',
             filename: 'log/filelog-info.log',
-            json: true,
-            format: winston.format.combine(winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss.SSS' }), winston.format.json())
-
-        }),
-        new winston.transports.File({
-            level: 'error',
-            filename: 'log/filelog-error.log',
             json: true,
             format: winston.format.combine(winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss.SSS' }), winston.format.json())
         })
     ]
 });
 
+
+const logger_error = winston.createLogger({
+    transports: [
+        new winston.transports.Console({
+            format: winston.format.combine(
+                winston.format.colorize({
+                    all: true
+                }))
+        }),
+        new winston.transports.File({
+            level: 'error',
+            filename: 'log/filelog-error.log',
+            json: true,
+            format: winston.format.combine(
+                winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss.SSS' }),
+                winston.format.json())
+        })
+    ]
+});
+
+
+const logger_debug = winston.createLogger({
+    transports: [
+        new winston.transports.Console({
+            format: winston.format.combine(
+                winston.format.colorize({
+                    all: true
+                }))
+        }),
+        new winston.transports.File({
+            level: 'debug',
+            filename: 'log/filelog-debug.log',
+            json: true,
+            format: winston.format.combine(winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss.SSS' }), winston.format.json())
+        })
+    ]
+});
+
+winston.addColors({
+    error: 'red',
+    warn: 'yellow',
+    info: 'green',
+    debug: 'cyan'
+});
+
 module.exports.error = function() {
-    logger.error.apply(logger, formatLogArguments(arguments))
+    logger_error.error.apply(logger_error, formatLogArguments(arguments));
 }
 
 module.exports.info = function() {
-    logger.info.apply(logger, formatLogArguments(arguments))
+    logger_info.info.apply(logger_info, arguments);
+}
+
+module.exports.debug = function() {
+    logger_debug.debug.apply(logger_debug, arguments);
 }
 
 function formatLogArguments(args) {
